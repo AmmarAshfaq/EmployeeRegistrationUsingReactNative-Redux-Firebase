@@ -1,0 +1,48 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */
+
+import React, {Component} from 'react';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import reducers from './src/reducers';
+import firebase from 'firebase';
+import RouterComponent from './src/Router';
+
+// const instructions = Platform.select({
+//     ios: 'Press Cmd+R to reload,\n' +
+//     'Cmd+D or shake for dev menu',
+//     android: 'Double tap R on your keyboard to reload,\n' +
+//     'Shake or press menu button for dev menu',
+// });
+
+type Props = {};
+export default class App extends Component<Props> {
+    UNSAFE_componentWillMount() {
+        const config = {
+            apiKey: "AIzaSyB27a61w0zuAYknxfomwfN_xETLRTseiGE",
+            authDomain: "employeeregistration-eaa0b.firebaseapp.com",
+            databaseURL: "https://employeeregistration-eaa0b.firebaseio.com",
+            projectId: "employeeregistration-eaa0b",
+            storageBucket: "employeeregistration-eaa0b.appspot.com",
+            messagingSenderId: "705722783192"
+        };
+        firebase.initializeApp(config);
+    }
+
+    render() {
+        const store = createStore(reducers, {}, applyMiddleware(thunk));
+
+        return (
+            <Provider store={store}>
+
+                    <RouterComponent/>
+
+            </Provider>
+        );
+    }
+}
+
